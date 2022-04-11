@@ -10,8 +10,9 @@ class RegisterLogin
 
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $e_password = md5($password);
 
-    $sql="select * from users where email='$email' and password='$password' ";
+    $sql="select * from users where email='$email' and password='$e_password' ";
     $quary = mysqli_query($con,$sql);
     $cnt = mysqli_num_rows($quary);
 
@@ -70,6 +71,7 @@ class RegisterLogin
     $phone = $_POST['phoneNo'];
     $flat = $_POST['flatNo'];
     $password = $_POST['password'];
+    $e_password = md5($password);
     $i_name = $_FILES['files']['name'];
     $fname = date("YmdHis").'_'.$i_name;
     $i_size=$_FILES['files']['size'];
@@ -85,7 +87,7 @@ class RegisterLogin
     {
       $move =  move_uploaded_file($image,"upload/".$i_name);
       $society_id = mysqli_insert_id($con);
-      $query = "INSERT into users(society_id,user_name,email,password,flat_no,contact,authorization) VALUES ($society_id,'$name','$email','$password','$flat','$phone','$status')";
+      $query = "INSERT into users(society_id,user_name,email,password,flat_no,contact,authorization) VALUES ($society_id,'$name','$email','$e_password','$flat','$phone','$status')";
       $result1   = mysqli_query($con, $query);
 
       if ($result)
